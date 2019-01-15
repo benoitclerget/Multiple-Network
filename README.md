@@ -80,8 +80,8 @@ Setup
 3.  Cloner le Git d’installation
 
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    git clone https://github.ibm.com/Alexis-Jolin/Multiple-Network
-    cd multiple-network
+    git clone https://github.com/benoitclerget/Multiple-Network.git
+    cd Multiple-Network
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 4.  Une fois dans ce dossiers, générer les fichiers de crypto avec la commandes
@@ -103,7 +103,7 @@ Setup
     export DOCKER_STACK=”fabric”
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Une fois les modification appliqué, copier le dossier multiple-network sur
+    Une fois les modification appliquées, copier le dossier multiple-network sur
     tous les PC
 
 6.  Créer et configurer Docker Swarm. Pour cela, sur le PC1 :
@@ -175,6 +175,6 @@ Une fois connecté lancé le script :
 ./script/script.sh
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Si tout est correcte, vous devriez avoir :
+Si tout est correct, vous devriez avoir :
 
 ![](https://cdn-images-1.medium.com/max/1600/1*TTgzN9CB5Spfkye8yEDdNg.png)
