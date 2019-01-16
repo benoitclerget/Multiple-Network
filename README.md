@@ -109,7 +109,7 @@ Setup
 6.  Créer et configurer Docker Swarm. Pour cela, sur le PC1 :
 
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    docker swarm init --advertise-addr <PC-1 IP address>
+    docker swarm init --advertise-addr <PC-1 IP address>
     docker swarm join-token manager
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -127,7 +127,7 @@ Setup
     Sur le PC1 :
 
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    docker network create --attachable --driver overlay fabric
+    docker network create --attachable --driver overlay fabric
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 8.  Démarrer l'Orderer
