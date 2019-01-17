@@ -100,7 +100,7 @@ Une fois les modification appliquées, copier le dossier multiple-network sur to
 6.  Créer et configurer Docker Swarm. Pour cela, sur le PC1 :
 
 ```
-    docker swarm init --advertise-addr <PC-1 IP address>
+    docker swarm init --advertise-addr <PC-1 IP address>
     docker swarm join-token manager
 ```
 
@@ -116,7 +116,13 @@ Après ces commandes, copier/coller la sortie de la dernière commande sur les P
 
     Sur le PC1 :
 
+<<<<<<< HEAD
     `docker network create --attachable --driver overlay fabric`
+=======
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    docker network create --attachable --driver overlay fabric
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>>>>>>> d9be0a62e17e3464b1f2643ea943837649f8de8b
 
 8.  Démarrer l'Orderer
 
