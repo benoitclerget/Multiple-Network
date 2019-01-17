@@ -33,9 +33,9 @@ export FABRIC_CFG_PATH=${PWD}
 export VERBOSE=false
 export ORDERER_HOSTNAME="pc1hostname"
 export ORG1_PEER0_HOSTNAME="pc2hostname"
-export ORG1_PEER1_HOSTNAME="pc3hostname"
-export ORG2_PEER0_HOSTNAME="pc4hostname"
-export ORG2_PEER1_HOSTNAME="pc5hostname"
+export ORG1_PEER1_HOSTNAME="pc2hostname"
+export ORG2_PEER0_HOSTNAME="pc3hostname"
+export ORG2_PEER1_HOSTNAME="pc3hostname"
 export SWARM_NETWORK="fabric"
 export DOCKER_STACK="fabric"
 

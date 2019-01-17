@@ -69,9 +69,9 @@ services:
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
       - CORE_PEER_ID=peer0.org2.example.com
-      - CORE_PEER_ADDRESS=peer0.org2.example.com:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org2.example.com:8051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org2.example.com:7051
+      - CORE_PEER_ADDRESS=peer0.org2.example.com:7151
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org2.example.com:8151
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org2.example.com:7151
       - CORE_PEER_LOCALMSPID=Org2MSP
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=blockchain-couchdb2:5984
@@ -100,10 +100,10 @@ services:
                     - node.hostname == $ORG2_PEER0_HOSTNAME
 
     ports:
-            - published: 7051
+            - published: 7151
               target: 7051
               mode: host
-            - published: 7053
+            - published: 7153
               target: 7053
               mode: host
     networks:
@@ -131,9 +131,9 @@ services:
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
       - CORE_PEER_ID=peer1.org2.example.com
-      - CORE_PEER_ADDRESS=peer1.org2.example.com:8051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org2.example.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org2.example.com:8051
+      - CORE_PEER_ADDRESS=peer1.org2.example.com:8151
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org2.example.com:7151
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org2.example.com:8151
       - CORE_PEER_LOCALMSPID=Org2MSP
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=blockchain-couchdb2-2:5984
@@ -162,10 +162,10 @@ services:
                     - node.hostname == $ORG2_PEER1_HOSTNAME
 
     ports:
-            - published: 8051
+            - published: 8151
               target: 7051
               mode: host
-            - published: 8053
+            - published: 8153
               target: 7053
               mode: host
     networks:
@@ -194,7 +194,7 @@ services:
       #- CORE_LOGGING_LEVEL=DEBUG
       - CORE_LOGGING_LEVEL=INFO
       - CORE_PEER_ID=cli
-      - CORE_PEER_ADDRESS=peer0.org2.example.com:7051
+      - CORE_PEER_ADDRESS=peer0.org2.example.com:7151
       - CORE_PEER_LOCALMSPID=Org2MSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/server.crt
@@ -231,7 +231,7 @@ services:
       - COUCHDB_PASSWORD=
     
     ports:
-            - published: 31984
+            - published: 32984
               target: 5984
               mode: host
     networks:
@@ -258,7 +258,7 @@ services:
       - COUCHDB_PASSWORD=
     
     ports:
-            - published: 31985
+            - published: 32985
               target: 5984
               mode: host
     networks:
