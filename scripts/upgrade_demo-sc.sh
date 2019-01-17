@@ -7,7 +7,7 @@ echo "\___ \    | |     / _ \   | |_) |   | |  "
 echo " ___) |   | |    / ___ \  |  _ <    | |  "
 echo "|____/    |_|   /_/   \_\ |_| \_\   |_|  "
 echo
-echo "Install demo-sc "
+echo "Upgrade demo-sc "
 echo
 CHANNEL_NAME="$1"
 DELAY="$2"
@@ -43,9 +43,9 @@ installDemoScChaincode 0 1 $VERSION
 echo "Install chaincode on peer0.org2..."
 installDemoScChaincode 0 2 $VERSION
 
-# Instantiate chaincode on peer0.org2
+# Upgrade chaincode on peer0.org2
 echo "Instantiating chaincode on peer0.org2..."
-instantiateDemoScChaincode 0 2 $VERSION
+upgradeDemoScChaincode 0 2 $VERSION
 
 
 

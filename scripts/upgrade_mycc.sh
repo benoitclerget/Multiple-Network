@@ -7,7 +7,7 @@ echo "\___ \    | |     / _ \   | |_) |   | |  "
 echo " ___) |   | |    / ___ \  |  _ <    | |  "
 echo "|____/    |_|   /_/   \_\ |_| \_\   |_|  "
 echo
-echo "Install demo-sc "
+echo "Upgrade mycc "
 echo
 CHANNEL_NAME="$1"
 DELAY="$2"
@@ -26,9 +26,9 @@ LANGUAGE=`echo "$LANGUAGE" | tr [:upper:] [:lower:]`
 COUNTER=1
 MAX_RETRY=5
 
-CC_SRC_PATH="github.com/chaincode/demo-sc/"
+CC_SRC_PATH="github.com/chaincode/chaincode_example02/go/"
 if [ "$LANGUAGE" = "node" ]; then
-	CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/demo-sc-node/"
+	CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/chaincode_example02/node/"
 fi
 
 echo "Channel name : "$CHANNEL_NAME
@@ -39,13 +39,13 @@ echo "Channel name : "$CHANNEL_NAME
 
 ## Install chaincode on peer0.org1 and peer0.org2
 echo "Installing chaincode on peer0.org1..."
-installDemoScChaincode 0 1 $VERSION
+installChaincode 0 1 $VERSION
 echo "Install chaincode on peer0.org2..."
-installDemoScChaincode 0 2 $VERSION
+installChaincode 0 2 $VERSION
 
-# Instantiate chaincode on peer0.org2
+# Upgrade chaincode on peer0.org2
 echo "Instantiating chaincode on peer0.org2..."
-instantiateDemoScChaincode 0 2 $VERSION
+upgradeChaincode 0 2 $VERSION
 
 
 

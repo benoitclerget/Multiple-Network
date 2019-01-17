@@ -120,21 +120,6 @@ installChaincode() {
   echo
 }
 
-installDemoScChaincode() {
-  PEER=$1
-  ORG=$2
-  setGlobals $PEER $ORG
-  VERSION=${3:-1.0}
-  set -x
-  peer chaincode install -n demo-sc -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH} >&log.txt
-  res=$?
-  set +x
-  cat log.txt
-  verifyResult $res "Chaincode installation on peer${PEER}.org${ORG} has failed"
-  echo "===================== Chaincode is installed on peer${PEER}.org${ORG} ===================== "
-  echo
-}
-
 instantiateChaincode() {
   PEER=$1
   ORG=$2
@@ -161,11 +146,27 @@ instantiateChaincode() {
   echo
 }
 
+installDemoScChaincode() {
+  PEER=$1
+  ORG=$2
+  setGlobals $PEER $ORG
+  VERSION=$3
+  set -x
+  peer chaincode install -n demo-sc -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH} >&log.txt
+  res=$?
+  set +x
+  cat log.txt
+  verifyResult $res "Chaincode installation on peer${PEER}.org${ORG} has failed"
+  echo "===================== Chaincode is installed on peer${PEER}.org${ORG} ===================== "
+  echo
+}
+
+
 instantiateDemoScChaincode() {
   PEER=$1
   ORG=$2
   setGlobals $PEER $ORG
-  VERSION=${3:-1.0}
+  VERSION=$3
 
   # while 'peer chaincode' command can get the orderer endpoint from the peer
   # (if join was successful), let's supply it directly as we know it using
@@ -177,7 +178,7 @@ instantiateDemoScChaincode() {
     set +x
   else
     set -x
-    peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n demo-sc -l ${LANGUAGE} -v 1.0 -c '{"Args":["init1","TEST"]}' -P "OR ('Org1MSP.peer','Org2MSP.peer')" >&log.txt
+    peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n demo-sc -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init1","TEST"]}' -P "OR ('Org1MSP.peer','Org2MSP.peer')" >&log.txt
     res=$?
     set +x
   fi
@@ -191,9 +192,10 @@ upgradeChaincode() {
   PEER=$1
   ORG=$2
   setGlobals $PEER $ORG
+  VERSION=$3
 
   set -x
-  peer chaincode upgrade -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 2.0 -c '{"Args":["init","a","90","b","210"]}' -P "AND ('Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')"
+  peer chaincode upgrade -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v ${VERSION} -c '{"Args":["init","a","90","b","210"]}' -P "AND ('Org1MSP.peer','Org2MSP.peer')" >&log.txt
   res=$?
   set +x
   cat log.txt
@@ -202,13 +204,15 @@ upgradeChaincode() {
   echo
 }
 
+
 upgradeDemoScChaincode() {
   PEER=$1
   ORG=$2
   setGlobals $PEER $ORG
+  VERSION=$3
 
   set -x
-  peer chaincode upgrade -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n demo-sc -v 2.0 -c '{"Args":["init1,"TEST"]}' -P "AND ('Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')"
+  peer chaincode upgrade -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n demo-sc -v ${VERSION} -c '{"Args":["init1","TEST"]}' -P "AND ('Org1MSP.peer','Org2MSP.peer')" >&log.txt
   res=$?
   set +x
   cat log.txt
