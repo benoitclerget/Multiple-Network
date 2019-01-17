@@ -116,13 +116,7 @@ Après ces commandes, copier/coller la sortie de la dernière commande sur les P
 
     Sur le PC1 :
 
-<<<<<<< HEAD
     `docker network create --attachable --driver overlay fabric`
-=======
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    docker network create --attachable --driver overlay fabric
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->>>>>>> d9be0a62e17e3464b1f2643ea943837649f8de8b
 
 8.  Démarrer l'Orderer
 
