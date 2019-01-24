@@ -188,6 +188,48 @@ instantiateDemoScChaincode() {
   echo
 }
 
+installEdfPocChaincode() {
+  PEER=$1
+  ORG=$2
+  setGlobals $PEER $ORG
+  VERSION=$3
+  set -x
+  peer chaincode install -n edf_poc -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH} >&log.txt
+  res=$?
+  set +x
+  cat log.txt
+  verifyResult $res "Chaincode installation on peer${PEER}.org${ORG} has failed"
+  echo "===================== Chaincode is installed on peer${PEER}.org${ORG} ===================== "
+  echo
+}
+
+instantiateEdfPocChaincode() {
+  PEER=$1
+  ORG=$2
+  setGlobals $PEER $ORG
+  VERSION=$3
+
+  # while 'peer chaincode' command can get the orderer endpoint from the peer
+  # (if join was successful), let's supply it directly as we know it using
+  # the "-o" option
+  if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
+    set -x
+    peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n edf_poc -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init"]}' -P "OR ('Org1MSP.peer','Org2MSP.peer')" >&log.txt
+    res=$?
+    set +x
+  else
+    set -x
+    peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n edf_poc -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init"]}' -P "OR ('Org1MSP.peer','Org2MSP.peer')" >&log.txt
+    res=$?
+    set +x
+  fi
+  cat log.txt
+  verifyResult $res "Chaincode instantiation on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' failed"
+  echo "===================== Chaincode is instantiated on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' ===================== "
+  echo
+}
+
+
 upgradeChaincode() {
   PEER=$1
   ORG=$2
@@ -213,6 +255,22 @@ upgradeDemoScChaincode() {
 
   set -x
   peer chaincode upgrade -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n demo-sc -v ${VERSION} -c '{"Args":["init1","TEST"]}' -P "AND ('Org1MSP.peer','Org2MSP.peer')" >&log.txt
+  res=$?
+  set +x
+  cat log.txt
+  verifyResult $res "Chaincode upgrade on peer${PEER}.org${ORG} has failed"
+  echo "===================== Chaincode is upgraded on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' ===================== "
+  echo
+}
+
+upgradeEdfPocChaincode() {
+  PEER=$1
+  ORG=$2
+  setGlobals $PEER $ORG
+  VERSION=$3
+
+  set -x
+  peer chaincode upgrade -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n edf_poc -v ${VERSION} -c '{"Args":["init"]}' -P "AND ('Org1MSP.peer','Org2MSP.peer')" >&log.txt
   res=$?
   set +x
   cat log.txt
@@ -383,6 +441,7 @@ parsePeerConnectionParameters() {
   done
   # remove leading space for output
   PEERS="$(echo -e "$PEERS" | sed -e 's/^[[:space:]]*//')"
+
 }
 
 # chaincodeInvoke <peer> <org> ...
@@ -427,7 +486,34 @@ chaincodeDemoScInvoke() {
     set +x
   else
     set -x
-    peer chaincode invoke -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc $PEER_CONN_PARMS -c '{"Args":["write","KEY1","THIS IS THE VALUE OF KEY1"]}' >&log.txt
+    peer chaincode invoke -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n demo-sc $PEER_CONN_PARMS -c '{"Args":["write","KEY1","THIS IS THE VALUE OF KEY1"]}' >&log.txt
+    res=$?
+    set +x
+  fi
+  cat log.txt
+  verifyResult $res "Invoke execution on $PEERS failed "
+  echo "===================== Invoke transaction successful on $PEERS on channel '$CHANNEL_NAME' ===================== "
+  echo
+}
+
+chaincodeEdfPocInvoke() {
+  parsePeerConnectionParameters $@
+  res=$?
+  verifyResult $res "Invoke transaction failed on channel '$CHANNEL_NAME' due to uneven number of peer and org parameters "
+
+  # while 'peer chaincode' command can get the orderer endpoint from the
+  # peer (if join was successful), let's supply it directly as we know
+  # it using the "-o" option
+  if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
+    set -x
+    peer chaincode invoke -o orderer.example.com:7050 -C $CHANNEL_NAME -n edf_poc $PEER_CONN_PARMS -c '{"Args":["creation_ordre","{\"UOI\":\"UOI1\",\"date\":\"2/1/2019\",\"deliverydate\":\"3/1/2019\",\"hourslist\":{\"3\":{\"vol\":200,\"price\":50}}}"]}' >&log.txt
+    peer chaincode invoke -o orderer.example.com:7050 -C $CHANNEL_NAME -n edf_poc $PEER_CONN_PARMS -c '{"Args":["creation_ordre","{\"UOI\":\"UOI2\",\"date\":\"2/1/2019\",\"deliverydate\":\"3/1/2019\",\"hourslist\":{\"3\":{\"vol\":200,\"price\":50},\"24\":{\"vol\":800,\"price\":150.5},\"25\":{\"vol\":900,\"price\":100.5}}}"]}' >&log.txt
+    res=$?
+    set +x
+  else
+    set -x
+    peer chaincode invoke -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n edf_poc $PEER_CONN_PARMS -c '{"Args":["creation_ordre","{\"UOI\":\"UOI1\",\"date\":\"2/1/2019\",\"deliverydate\":\"3/1/2019\",\"hourslist\":{\"3\":{\"vol\":200,\"price\":50}}}"]}' >&log.txt
+    peer chaincode invoke -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n edf_poc $PEER_CONN_PARMS -c '{"Args":["creation_ordre","{\"UOI\":\"UOI2\",\"date\":\"2/1/2019\",\"deliverydate\":\"3/1/2019\",\"hourslist\":{\"3\":{\"vol\":200,\"price\":50},\"24\":{\"vol\":800,\"price\":150.5},\"25\":{\"vol\":900,\"price\":100.5}}}"]}' >&log.txt
     res=$?
     set +x
   fi
