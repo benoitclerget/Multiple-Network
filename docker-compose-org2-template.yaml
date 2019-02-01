@@ -41,7 +41,7 @@ services:
                     - node.hostname == $ORG2_PEER0_HOSTNAME
 
     ports:
-     - published: 7054
+     - published: 7154
        target: 7054
        mode: host
     networks:

@@ -40,7 +40,7 @@
 Pour pouvoir réaliser l’installation suivante, il est nécessaire d’avoir sur
 chacun des hôtes les composants suivant :
 
--   Fabric — 1.4.0 (See Fabric 1.4.0 installation at the end of this doc)
+-   Fabric — 1.4.0 See [Fabric 1.4.0 installation](#fabricinstall) at the end of this doc
 
 -   Go
 
@@ -156,6 +156,7 @@ Si tout est correct, vous devriez avoir :
 ![](https://cdn-images-1.medium.com/max/1600/1*TTgzN9CB5Spfkye8yEDdNg.png)
 
 
+<a id="fabricinstall"></a>
 # Fabric 1.4.0 installation
 1.  Cloner le Git Fabric dans $GOPATH/src/github.com/hyperledger
 
